@@ -36,7 +36,7 @@ public class HW1Mapper extends Mapper<LongWritable, Text, Text, Text> {
             timeScaled = Integer.parseInt(matcher.group(2)) % (scale * 1000) * 10000;
 
             word.set(matcher.group(1));
-            amounts.set(matcher.group(3) + "," + timeScaled);
+            amounts.set(matcher.group(3) + "," + timeScaled + "," + 1);
             context.write(word, amounts);
         }
     }

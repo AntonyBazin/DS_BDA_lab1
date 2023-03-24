@@ -19,7 +19,7 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
 
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-        int sum = 0, count = 0, metric_value = 0, time = 0, scale = 0;
+        int sum = 0, count = 0, time = 0, metric_value, scale, record_weight;
         String[] fragments;
 
         Configuration conf = context.getConfiguration();
@@ -29,9 +29,10 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
             fragments = value.toString().split(",");
             metric_value = Integer.parseInt(fragments[0]);
             time = Integer.parseInt(fragments[1]);
+            record_weight = Integer.parseInt(fragments[2]);
 
-            sum += metric_value;
-            ++count;
+            sum += metric_value * record_weight;
+            count += record_weight;
         }
         sum /= count;
         context.write(key, new Text(time + ", " + scale + "s, " + sum));

@@ -229,5 +229,6 @@ buildNumber.properties
 
 lab1.iml
 input/*
+output/*
 helper_script.sh
 

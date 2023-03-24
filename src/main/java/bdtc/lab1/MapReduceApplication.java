@@ -22,14 +22,14 @@ public class MapReduceApplication {
                     "input_dir output_dir scale");
         }
         Configuration conf = new Configuration();
-        // задаём выходной файл, разделенный запятыми - формат CSV в соответствии с заданием
-        conf.set("mapreduce.output.textoutputformat.separator", ",");
-        conf.set("scale", "60");
+        // задаём враменной интервал, по которому будет происходить аггрегация значений
+        conf.set("scale", String.valueOf(args[2]));
 
-        Job job = Job.getInstance(conf, "browser count");
+        Job job = Job.getInstance(conf, "Metric Aggregation");
         job.setJarByClass(MapReduceApplication.class);
         job.setMapperClass(HW1Mapper.class);
         job.setReducerClass(HW1Reducer.class);
+        job.setCombinerClass(HW1Combiner.class);
 
         // задаем тип возвращаемого маппером значения
         job.setMapOutputValueClass(Text.class);

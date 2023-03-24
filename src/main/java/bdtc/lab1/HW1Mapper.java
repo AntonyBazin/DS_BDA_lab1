@@ -12,10 +12,10 @@ import java.util.regex.*;
 
 public class HW1Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-    private final static IntWritable one = new IntWritable(1);
+    private final static IntWritable amount = new IntWritable(1);
     private final Text word = new Text();
     // The regex pattern to match the strings
-    private final static String regexStr = "(\\d{1,2}), \\d{10}, \\d{2}";
+    private final static String regexStr = "([0-9]{1,2}), [0-9]{10}, ([0-9]{2})";
     Pattern lineRegex = Pattern.compile(regexStr);
 
     @Override
@@ -27,7 +27,8 @@ public class HW1Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
             context.getCounter(CounterType.MALFORMED).increment(1);
         } else {
             word.set(matcher.group(1));
-            context.write(word, one);
+            amount.set(Integer.parseInt(matcher.group(2)));
+            context.write(word, amount);
         }
     }
 }

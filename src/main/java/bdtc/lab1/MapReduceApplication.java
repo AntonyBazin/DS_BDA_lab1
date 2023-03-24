@@ -3,14 +3,12 @@ package bdtc.lab1;
 import lombok.extern.log4j.Log4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Counter;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 
 @Log4j
@@ -18,8 +16,10 @@ public class MapReduceApplication {
 
     public static void main(String[] args) throws Exception {
 
-        if (args.length < 2) {
-            throw new RuntimeException("You should specify input and output folders!");
+        if (args.length < 3) {
+            throw new RuntimeException("Usage: yarn jar " +
+                    "target/lab1-1.0-SNAPSHOT-jar-with-dependencies.jar " +
+                    "input_dir output_dir scale");
         }
         Configuration conf = new Configuration();
         // задаём выходной файл, разделенный запятыми - формат CSV в соответствии с заданием

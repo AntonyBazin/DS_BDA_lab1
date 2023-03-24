@@ -25,6 +25,7 @@ public class MapReduceApplication {
         // задаём враменной интервал, по которому будет происходить аггрегация значений
         conf.set("scale", String.valueOf(args[2]));
 
+        // Задаем конфигурацию задачи
         Job job = Job.getInstance(conf, "Metric Aggregation");
         job.setJarByClass(MapReduceApplication.class);
         job.setMapperClass(HW1Mapper.class);
@@ -34,6 +35,7 @@ public class MapReduceApplication {
         // задаем тип возвращаемого маппером значения
         job.setMapOutputValueClass(Text.class);
 
+        // задаем типы выходных данных
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         job.setOutputFormatClass(SequenceFileOutputFormat.class);

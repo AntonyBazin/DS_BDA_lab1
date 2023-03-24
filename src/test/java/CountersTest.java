@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class CountersTest {
 
     private MapDriver<LongWritable, Text, Text, Text> mapDriver;
-    private final String testMalformedLine = "mama mila ramu";
+    private final String testMalformedLine = "3,1679128192,99"; // пробелы имеют значение
     private final String testLine = "2, 1679128192, 77";
     
     @Before

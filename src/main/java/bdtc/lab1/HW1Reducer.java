@@ -7,10 +7,13 @@ import org.apache.hadoop.conf.Configuration;
 import java.io.IOException;
 
 /**
- * Редьюсер: суммирует все единицы полученные от {@link HW1Mapper}, выдаёт суммарное количество пользователей по браузерам
+ * Редьюсер: суммирует все значения, полученные от {@link HW1Mapper} (либо {@link HW1Combiner}),
+ * выдаёт значения метрик, аггрегированных усреднением за определнные промежутки времени.
  */
 public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
 
+    // Величина временных интервалов определяется пользователем либо, если она не задана,
+    // устанавливается значение по умолчанию - 60 секунд.
     @Override
     protected void setup(org.apache.hadoop.mapreduce.Reducer.Context context) throws IOException, InterruptedException{
         super.setup(context);
@@ -22,15 +25,22 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
         int sum = 0, count = 0, time = 0, metric_value, scale, record_weight;
         String[] fragments;
 
+        // Получение значения временного интервала для аггрегации
         Configuration conf = context.getConfiguration();
         scale = Integer.parseInt(conf.get("scale"));
 
+        // Проход по всем значениям, полученным от маппера либо комбайнера
         for (Text value: values) {
+            // Разделение строки, получаемой от маппера, по разделителю (запятая)
             fragments = value.toString().split(",");
             metric_value = Integer.parseInt(fragments[0]);
             time = Integer.parseInt(fragments[1]);
             record_weight = Integer.parseInt(fragments[2]);
 
+            // Суммирование метрик. После маппера число повторений каждой строки равно 1,
+            // после комбайнера - сумме числа вхождений строк с аналогичным ключом.
+            // Поэтому при добавлении очередного значения metric_value к sum
+            // требуется домножение на record_weight. В конце происходит усреднение.
             sum += metric_value * record_weight;
             count += record_weight;
         }

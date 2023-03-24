@@ -40,7 +40,7 @@ public class MapReduceTest {
     @Test
     public void testReducer() throws IOException {
         List<Text> values = new ArrayList<Text>();
-        values.add(new Text("6,100,1")); // (6 + 2)/2 == 4 - mean value
+        values.add(new Text("6,100,1")); // (6 + 2)/2 == 4 - среднее значение
         values.add(new Text("2,100,1"));
         reduceDriver
                 .withInput(new Text("test_key"), values)
@@ -51,10 +51,10 @@ public class MapReduceTest {
     @Test
     public void testMapReduce() throws IOException {
         mapReduceDriver
+                .withInput(new LongWritable(), new Text(testLine)) // аггрегация усреднением,
+                .withInput(new LongWritable(), new Text(testLine)) // повторы одинаковых строк
+                .withInput(new LongWritable(), new Text(testLine)) // не изменят среднего
                 .withInput(new LongWritable(), new Text(testLine))
-//                .withInput(new LongWritable(), new Text(testLine))
-//                .withInput(new LongWritable(), new Text(testLine))
-//                .withInput(new LongWritable(), new Text(testLine))
                 .withOutput(new Text("2"), new Text("281920000, 60s, 77"))
                 .runTest();
     }

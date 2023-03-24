@@ -21,12 +21,13 @@ public class CombinerTest {
     @Test
     public void testCombiner() throws IOException {
         List<Text> values = new ArrayList<Text>();
-        values.add(new Text("6,100,1")); // (6 + 2 + 1) == 9 - sum
-        values.add(new Text("2,100,1"));
+        values.add(new Text("6,100,1")); // (6 + 2 + 1 + 1) == 10 - сумма
+        values.add(new Text("2,100,1")); // всего участвовало 4 слагаемых
+        values.add(new Text("1,100,1"));
         values.add(new Text("1,100,1"));
         combineDriver
                 .withInput(new Text("test_key"), values)
-                .withOutput(new Text("test_key"), new Text("9,100,3"))
+                .withOutput(new Text("test_key"), new Text("10,100,4"))
                 .runTest();
     }
 }

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CountersTest {
 
-    private MapDriver<LongWritable, Text, Text, IntWritable> mapDriver;
+    private MapDriver<LongWritable, Text, Text, Text> mapDriver;
     private final String testMalformedLine = "mama mila ramu";
     private final String testLine = "1, 1679128192, 77";
     private final static String regexStr = "([0-9]{1,2}), [0-9]{10}, [0-9]{2}";
@@ -45,7 +45,7 @@ public class CountersTest {
         }
         mapDriver
                 .withInput(new LongWritable(), new Text(testLine))
-                .withOutput(new Text(matcher.group(1)), new IntWritable(77))
+                .withOutput(new Text(matcher.group(1)), new Text("77,281920000"))
                 .runTest();
         assertEquals("Expected 1 counter increment", 0, mapDriver.getCounters()
                 .findCounter(CounterType.MALFORMED).getValue());
@@ -61,7 +61,7 @@ public class CountersTest {
                 .withInput(new LongWritable(), new Text(testLine))
                 .withInput(new LongWritable(), new Text(testMalformedLine))
                 .withInput(new LongWritable(), new Text(testMalformedLine))
-                .withOutput(new Text(matcher.group(1)), new IntWritable(77))
+                .withOutput(new Text(matcher.group(1)), new Text("77,281920000"))
                 .runTest();
 
         assertEquals("Expected 2 counter increment", 2, mapDriver.getCounters()

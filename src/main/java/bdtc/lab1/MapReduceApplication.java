@@ -23,13 +23,18 @@ public class MapReduceApplication {
         Configuration conf = new Configuration();
         // задаём выходной файл, разделенный запятыми - формат CSV в соответствии с заданием
         conf.set("mapreduce.output.textoutputformat.separator", ",");
+        conf.set("scale", "60");
 
         Job job = Job.getInstance(conf, "browser count");
         job.setJarByClass(MapReduceApplication.class);
         job.setMapperClass(HW1Mapper.class);
         job.setReducerClass(HW1Reducer.class);
+
+        // задаем тип возвращаемого маппером значения
+        job.setMapOutputValueClass(Text.class);
+
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(Text.class);
         job.setOutputFormatClass(TextOutputFormat.class);
 
         Path outputDirectory = new Path(args[1]);

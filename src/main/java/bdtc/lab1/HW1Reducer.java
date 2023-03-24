@@ -34,6 +34,6 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
             ++count;
         }
         sum /= count;
-        context.write(key, new Text(sum + ", " + time + ", " + scale + "s"));
+        context.write(key, new Text(time + ", " + scale + "s, " + sum));
     }
 }

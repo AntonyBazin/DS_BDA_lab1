@@ -55,7 +55,7 @@ public class MapReduceTest {
         values.add(new Text("2,100"));
         reduceDriver
                 .withInput(new Text("test_key"), values)
-                .withOutput(new Text("test_key"), new Text("4, 100, 60s"))
+                .withOutput(new Text("test_key"), new Text("100, 60s, 4"))
                 .runTest();
     }
 
@@ -67,7 +67,7 @@ public class MapReduceTest {
         mapReduceDriver
                 .withInput(new LongWritable(), new Text(testLine))
                 .withInput(new LongWritable(), new Text(testLine))
-                .withOutput(new Text(matcher.group(1)), new Text("77, 281920000, 60s"))
+                .withOutput(new Text(matcher.group(1)), new Text("281920000, 60s, 77"))
                 .runTest();
     }
 }

@@ -45,7 +45,7 @@ public class HW1Mapper extends Mapper<LongWritable, Text, Text, Text> {
             context.getCounter(CounterType.MALFORMED).increment(1);
         } else {
             // Отбрасывание незначащих разрядов временной метки, представленной в миллисекундах
-            timeScaled = Integer.parseInt(matcher.group(2)) % (scale * 1000) * 10000;
+            timeScaled = Integer.parseInt(matcher.group(2)) / (scale * 1000) * 10000;
 
             // Задание ключа и значения
             word.set(matcher.group(1) + "," + timeScaled);

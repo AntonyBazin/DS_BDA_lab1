@@ -15,7 +15,7 @@ import java.io.IOException;
 public class HW1Combiner extends Reducer<Text, Text, Text, Text> {
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-        int sum = 0, count = 0, time = 0, metric_value, record_weight;
+        int sum = 0, count = 0, metric_value, record_weight;
         String[] fragments;
 
 

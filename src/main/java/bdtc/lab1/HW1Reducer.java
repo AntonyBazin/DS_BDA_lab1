@@ -40,7 +40,7 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
             // после комбайнера - сумме числа вхождений строк с аналогичным ключом.
             // Поэтому при добавлении очередного значения metric_value к sum
             // требуется домножение на record_weight. В конце происходит усреднение.
-            sum += metric_value * record_weight;
+            sum += metric_value;
             count += record_weight;
         }
         sum /= count;

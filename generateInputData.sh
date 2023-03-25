@@ -21,10 +21,10 @@ makeLogLine() {
   sleep $((RANDOM % MAX_DELAY))
   DATE=$(/usr/bin/date "+%s")
   RESULT="$((RANDOM % LOG_ID_LIMIT)), $DATE, $(shuf -i 10-99 -n 1)"
-  echo "$RESULT" >> "input/$1.txt"
+  echo "$RESULT" >> "input/$1"
 }
 
-for _ in {1..200}
+for _ in {1..50}
   do
     makeLogLine "$@"
   done

@@ -42,9 +42,9 @@ public class MapReduceTest {
     public void testMapperMultiple() throws IOException {
         mapDriver
                 .withInput(new LongWritable(), new Text(testLineOne))
-                .withInput(new LongWritable(), new Text(testLineOne))
+                .withInput(new LongWritable(), new Text(testLineTwo))
                 .withOutput(new Text("2,279850000"), new Text("77,1"))
-                .withOutput(new Text("2,279850000"), new Text("77,1"))
+                .withOutput(new Text("2,279850000"), new Text("64,1"))
                 .runTest();
     }
 

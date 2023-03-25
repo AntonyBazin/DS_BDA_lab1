@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  * Редьюсер: суммирует все значения, полученные от {@link HW1Mapper} (либо {@link HW1Combiner}),
- * выдаёт значения метрик, аггрегированных усреднением за определнные промежутки времени.
+ * выдаёт значения метрик, аггрегированных усреднением за определенные промежутки времени.
  */
 public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
 
@@ -22,8 +22,8 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
 
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-        int sum = 0, count = 0, time = 0, metric_value, scale, record_weight;
-        String[] fragments;
+        int sum = 0, count = 0, metric_value, scale, record_weight;
+        String[] value_fragments;
 
         // Получение значения временного интервала для аггрегации
         Configuration conf = context.getConfiguration();
@@ -32,10 +32,9 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
         // Проход по всем значениям, полученным от маппера либо комбайнера
         for (Text value: values) {
             // Разделение строки, получаемой от маппера, по разделителю (запятая)
-            fragments = value.toString().split(",");
-            metric_value = Integer.parseInt(fragments[0]);
-            time = Integer.parseInt(fragments[1]);
-            record_weight = Integer.parseInt(fragments[2]);
+            value_fragments = value.toString().split(",");
+            metric_value = Integer.parseInt(value_fragments[0]);
+            record_weight = Integer.parseInt(value_fragments[1]);
 
             // Суммирование метрик. После маппера число повторений каждой строки равно 1,
             // после комбайнера - сумме числа вхождений строк с аналогичным ключом.
@@ -45,6 +44,6 @@ public class HW1Reducer extends Reducer<Text, Text, Text, Text> {
             count += record_weight;
         }
         sum /= count;
-        context.write(key, new Text(time + ", " + scale + "s, " + sum));
+        context.write(key, new Text(scale + "s, " + sum));
     }
 }

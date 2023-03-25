@@ -23,8 +23,7 @@ public class HW1Combiner extends Reducer<Text, Text, Text, Text> {
             // Разделение строки, получаемой от маппера, по разделителю (запятая)
             fragments = value.toString().split(",");
             metric_value = Integer.parseInt(fragments[0]);
-            time = Integer.parseInt(fragments[1]);
-            record_weight = Integer.parseInt(fragments[2]);
+            record_weight = Integer.parseInt(fragments[1]);
 
             // Суммирование метрик. После маппера число повторений каждой строки равно 1,
             // и, следовательно, при добавлении очередного значения metric_value к sum
@@ -32,6 +31,6 @@ public class HW1Combiner extends Reducer<Text, Text, Text, Text> {
             sum += metric_value;
             count += record_weight;
         }
-        context.write(key, new Text(sum + "," + time + "," + count));
+        context.write(key, new Text(sum + "," + count));
     }
 }

@@ -33,18 +33,18 @@ public class MapReduceTest {
     public void testMapper() throws IOException {
         mapDriver
                 .withInput(new LongWritable(), new Text(testLine))
-                .withOutput(new Text("2"), new Text("77,281920000,1"))
+                .withOutput(new Text("2,281920000"), new Text("77,1"))
                 .runTest();
     }
 
     @Test
     public void testReducer() throws IOException {
         List<Text> values = new ArrayList<Text>();
-        values.add(new Text("6,100,1")); // (6 + 2)/2 == 4 - среднее значение
-        values.add(new Text("2,100,1"));
+        values.add(new Text("6,1")); // (6 + 2)/2 == 4 - среднее значение
+        values.add(new Text("2,1"));
         reduceDriver
-                .withInput(new Text("test_key"), values)
-                .withOutput(new Text("test_key"), new Text("100, 60s, 4"))
+                .withInput(new Text("test_key,100"), values)
+                .withOutput(new Text("test_key,100"), new Text("60s, 4"))
                 .runTest();
     }
 
@@ -55,7 +55,7 @@ public class MapReduceTest {
                 .withInput(new LongWritable(), new Text(testLine)) // повторы одинаковых строк
                 .withInput(new LongWritable(), new Text(testLine)) // не изменят среднего
                 .withInput(new LongWritable(), new Text(testLine))
-                .withOutput(new Text("2"), new Text("281920000, 60s, 77"))
+                .withOutput(new Text("2,281920000"), new Text("60s, 77"))
                 .runTest();
     }
 }

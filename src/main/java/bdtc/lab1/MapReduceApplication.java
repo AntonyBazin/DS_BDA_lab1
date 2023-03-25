@@ -29,8 +29,8 @@ public class MapReduceApplication {
         Job job = Job.getInstance(conf, "Metric Aggregation");
         job.setJarByClass(MapReduceApplication.class);
         job.setMapperClass(HW1Mapper.class);
-        job.setReducerClass(HW1Reducer.class);
         job.setCombinerClass(HW1Combiner.class);
+        job.setReducerClass(HW1Reducer.class);
 
         // задаем тип возвращаемого маппером значения
         job.setMapOutputValueClass(Text.class);

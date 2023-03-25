@@ -12,7 +12,7 @@ import java.util.regex.*;
  * Класс маппера. Получает из конфигурации задачи значение временного интервала, по которому
  * следует аггрегировать значения. При отсутствии соответствующего параметра задаст его со
  * значением 60 секунд. Преобразует временную метку в соответствии с заданным интервалом, и
- * передает далее ключ (id записи) и значение (значение_метрики,временная_метка,число_вхождений)
+ * передает далее ключ (id записи,временная_метка) и значение (значение_метрики,число_вхождений)
  */
 
 public class HW1Mapper extends Mapper<LongWritable, Text, Text, Text> {
@@ -48,8 +48,8 @@ public class HW1Mapper extends Mapper<LongWritable, Text, Text, Text> {
             timeScaled = Integer.parseInt(matcher.group(2)) % (scale * 1000) * 10000;
 
             // Задание ключа и значения
-            word.set(matcher.group(1));
-            amounts.set(matcher.group(3) + "," + timeScaled + "," + 1);
+            word.set(matcher.group(1) + "," + timeScaled);
+            amounts.set(matcher.group(3) + "," + 1);
             context.write(word, amounts);
         }
     }

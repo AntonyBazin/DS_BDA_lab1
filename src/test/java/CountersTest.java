@@ -36,7 +36,7 @@ public class CountersTest {
     public void testMapperCounterZero() throws IOException {
         mapDriver
                 .withInput(new LongWritable(), new Text(testLine))
-                .withOutput(new Text("2"), new Text("77,281920000,1"))
+                .withOutput(new Text("2,281920000"), new Text("77,1"))
                 .runTest();
         assertEquals("Expected 1 counter increment", 0, mapDriver.getCounters()
                 .findCounter(CounterType.MALFORMED).getValue());
@@ -48,7 +48,7 @@ public class CountersTest {
                 .withInput(new LongWritable(), new Text(testLine))
                 .withInput(new LongWritable(), new Text(testMalformedLine))
                 .withInput(new LongWritable(), new Text(testMalformedLine))
-                .withOutput(new Text("2"), new Text("77,281920000,1"))
+                .withOutput(new Text("2,281920000"), new Text("77,1"))
                 .runTest();
 
         assertEquals("Expected 2 counter increment", 2, mapDriver.getCounters()
